@@ -2,7 +2,7 @@ package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityNotFoundException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
 import java.util.Optional;
 

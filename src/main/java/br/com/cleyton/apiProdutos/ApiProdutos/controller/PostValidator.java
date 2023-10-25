@@ -1,56 +1,57 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityAlreadyExistsException;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.TermsMissingException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
 import java.util.Optional;
 
 public class PostValidator {
     private final ProductRepository repository;
-    private final ProductModel bodyProductModel;
+    private final ProductDto bodyProduct;
 
-    public PostValidator(ProductModel bodyProductModel, ProductRepository repository) {
+    public PostValidator(ProductDto bodyProduct, ProductRepository repository) {
         this.repository = repository;
-        this.bodyProductModel = bodyProductModel;
+        this.bodyProduct = bodyProduct;
     }
 
     public ProductModel postProductValidator() {
-        if(bodyProductModel.getName() == null) {
+        if(bodyProduct.getName() == null) {
             throw new TermsMissingException("'name' is missing");
         }
 
-        if(bodyProductModel.getDescription() == null) {
+        if(bodyProduct.getDescription() == null) {
             throw new TermsMissingException("'description' is missing");
         }
 
-        if(bodyProductModel.getPrice() == null) {
+        if(bodyProduct.getPrice() == null) {
             throw new TermsMissingException("'price' is null");
         }
 
-        if(bodyProductModel.getQuantity() == null) {
+        if(bodyProduct.getQuantity() == null) {
             throw new TermsMissingException("'quantity' is missing");
         }
 
-        if(bodyProductModel.getBarCode() == null) {
+        if(bodyProduct.getBarCode() == null) {
             throw new TermsMissingException("'barCode' is missing");
         }
 
-        if(bodyProductModel.getManufacturingDate() == null) {
+        if(bodyProduct.getManufacturingDate() == null) {
             throw new TermsMissingException("'manufacturingDate' is missing");
         }
 
-        if (bodyProductModel.getExpirationDate() == null) {
+        if (bodyProduct.getExpirationDate() == null) {
             throw new TermsMissingException("'expirationDate' is missing");
         }
 
-        Optional<ProductModel> isProductModel = repository.findByBarCode(bodyProductModel.getBarCode());
+        Optional<ProductModel> isProductModel = repository.findByBarCode(bodyProduct.getBarCode());
         if(isProductModel.isPresent()) {
             throw new EntityAlreadyExistsException("Já existe um produto com esse código");
         }
-
-        return repository.save(bodyProductModel);
+        ProductModel product = new ProductModel(bodyProduct);
+        return repository.save(product);
     }
 }
 

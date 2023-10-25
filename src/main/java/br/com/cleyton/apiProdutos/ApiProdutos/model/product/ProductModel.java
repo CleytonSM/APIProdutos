@@ -1,14 +1,21 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.model.product;
 
 
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -27,8 +34,16 @@ public class ProductModel {
     private LocalDateTime manufacturingDate;
     @Column(nullable = false)
     private LocalDateTime expirationDate;
-    private Boolean isDeleted = Boolean.FALSE;
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public ProductModel(ProductDto data) {
+        this.name = data.getName();
+        this.description = data.getDescription();
+        this.price = data.getPrice();
+        this.quantity = data.getQuantity();
+        this.barCode = data.getBarCode();
+        this.manufacturingDate = data.getManufacturingDate();
+        this.expirationDate = data.getExpirationDate();
+    }
 }

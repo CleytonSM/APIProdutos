@@ -1,12 +1,10 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.service.product;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.controller.*;
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductUpdateRecordData;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,71 +16,57 @@ public class ProductService {
     @Autowired
     private ProductRepository repository;
 
-    public ResponseEntity<Object> createProduct(ProductModel bodyProductModel) {
-        PostValidator postValidator = new PostValidator(bodyProductModel, repository);
-        ProductModel product = postValidator.postProductValidator();
-
-        return new ResponseEntity<>(product, HttpStatus.CREATED);
+    public ProductModel createProduct(ProductDto bodyProduct) {
+        PostValidator postValidator = new PostValidator(bodyProduct, repository);
+        return postValidator.postProductValidator();
     }
 
-    public ResponseEntity<Object> getProductById(Integer id) {
+    public ProductModel getProductById(Integer id) {
         GetValidator getValidator = new GetValidator(id, repository);
-        ProductModel product = getValidator.getProductValidator();
-
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return getValidator.getProductValidator();
     }
 
-    public ResponseEntity<Object> getAllProducts() {
+    public List<ProductModel> getAllProducts() {
         GetValidator getValidator = new GetValidator(repository);
-        List<ProductModel> allProducts = getValidator.getAllProductsValidator();
-
-        return new ResponseEntity<>(allProducts, HttpStatus.OK);
+        return getValidator.getAllProductsValidator();
     }
 
-    public ResponseEntity<Object> getAllProductsPageable(Integer pageNumber) {
+    public Stream<ProductModel> getAllProductsPageable(Integer pageNumber) {
         GetValidator getValidator = new GetValidator(repository, pageNumber);
-        Stream<ProductModel> allProductsPageable = getValidator.getAllProductsPageableValidator();
-
-        return new ResponseEntity<>(allProductsPageable, HttpStatus.OK);
+        return getValidator.getAllProductsPageableValidator();
     }
 
-    public ResponseEntity<Object> partialProductUpdateById(Integer id, ProductUpdateRecordData data) {
+    public ProductModel partialProductUpdateById(Integer id, ProductDto data) {
         PatchValidator patchValidator = new PatchValidator(repository, id, data);
-        ProductModel product = patchValidator.patchProductByIdValidator();
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return patchValidator.patchProductByIdValidator();
     }
 
-    public ResponseEntity<Object> fullProductUpdateById(Integer id, ProductUpdateRecordData data) {
+    public ProductModel fullProductUpdateById(Integer id, ProductDto data) {
         PutValidator putValidator = new PutValidator(repository, id, data);
-        ProductModel product = putValidator.putProductByIdValidator();
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return putValidator.putProductByIdValidator();
     }
 
-    public ResponseEntity<Object> partialProductUpdateByBarCode(Long barCode, ProductUpdateRecordData data) {
+    public ProductModel partialProductUpdateByBarCode(Long barCode, ProductDto data) {
         PatchValidator patchValidator = new PatchValidator(repository, barCode, data);
-        ProductModel product = patchValidator.patchProductByBarCodeValidator();
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return patchValidator.patchProductByBarCodeValidator();
     }
 
-    public ResponseEntity<Object> fullProductUpdateByBarCode(Long barCode, ProductUpdateRecordData data) {
+    public ProductModel fullProductUpdateByBarCode(Long barCode, ProductDto data) {
         PutValidator putValidator = new PutValidator(repository, data, barCode);
-        ProductModel product = putValidator.putProductByBarCodeValidator();
 
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return putValidator.putProductByBarCodeValidator();
     }
 
-    public ResponseEntity<Object> deleteProductById(Integer id) {
+    public ProductModel deleteProductById(Integer id) {
         DeleteValidator deleteValidator = new DeleteValidator(repository, id);
-        ProductModel product = deleteValidator.deleteProductByIdValidator();
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return deleteValidator.deleteProductByIdValidator();
     }
 
-    public ResponseEntity<Object> deleteProductByBarCode(Long barCode) {
+    public ProductModel deleteProductByBarCode(Long barCode) {
         DeleteValidator deleteValidator = new DeleteValidator(repository, barCode);
-        ProductModel product = deleteValidator.deleteProductByBarCodeValidator();
-        return new ResponseEntity<>(product, HttpStatus.OK);
+        return deleteValidator.deleteProductByBarCodeValidator();
     }
 }

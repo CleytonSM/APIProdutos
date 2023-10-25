@@ -1,10 +1,10 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EmptyRequestBodyException;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityNotFoundException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductUpdateRecordData;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
 import java.util.Optional;
 
@@ -12,15 +12,15 @@ public class PatchValidator {
 
     private ProductRepository repository;
     private Integer id;
-    private ProductUpdateRecordData data;
+    private ProductDto data;
     private Long barCode;
-    public PatchValidator(ProductRepository repository, Integer id, ProductUpdateRecordData data) {
+    public PatchValidator(ProductRepository repository, Integer id, ProductDto data) {
         this.repository = repository;
         this.id = id;
         this.data = data;
     }
 
-    public PatchValidator(ProductRepository repository, Long barCode, ProductUpdateRecordData data) {
+    public PatchValidator(ProductRepository repository, Long barCode, ProductDto data) {
         this.repository = repository;
         this.data = data;
         this.barCode = barCode;
@@ -41,29 +41,29 @@ public class PatchValidator {
             throw new EntityNotFoundException("Esse produto não existe");
         }
         ProductModel product = optionalProductModel.get();
-        if(data.name() != null) {
-            product.setName(data.name());
+        if(data.getName() != null) {
+            product.setName(data.getName());
         }
-        if(data.description() != null) {
-            product.setDescription(data.description());
+        if(data.getDescription() != null) {
+            product.setDescription(data.getDescription());
         }
-        if(data.price() != null) {
-            product.setPrice(data.price());
+        if(data.getPrice() != null) {
+            product.setPrice(data.getPrice());
         }
-        if(data.quantity() != null) {
-            product.setQuantity(data.quantity());
+        if(data.getQuantity() != null) {
+            product.setQuantity(data.getQuantity());
         }
-        if(data.barCode() != null) {
-            product.setBarCode(data.barCode());
+        if(data.getBarCode() != null) {
+            product.setBarCode(data.getBarCode());
         }
-        if(data.manufacturingDate() != null) {
-            product.setManufacturingDate(data.manufacturingDate());
+        if(data.getManufacturingDate() != null) {
+            product.setManufacturingDate(data.getManufacturingDate());
         }
-        if(data.expirationDate() != null) {
-            product.setExpirationDate(data.expirationDate());
+        if(data.getExpirationDate() != null) {
+            product.setExpirationDate(data.getExpirationDate());
         }
-        if(data.name() == null && data.manufacturingDate() == null && data.expirationDate() == null && data.description() == null
-                && data.barCode() == null && data.price() == null && data.quantity() == null ) {
+        if(data.getName() == null && data.getManufacturingDate() == null && data.getExpirationDate() == null && data.getDescription() == null
+                && data.getBarCode() == null && data.getPrice() == null && data.getQuantity() == null ) {
             throw new EmptyRequestBodyException("Corpo da requisição vazio");
         }
         return repository.save(product);

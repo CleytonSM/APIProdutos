@@ -1,7 +1,7 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.controller.product;
 
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductUpdateRecordData;
 import br.com.cleyton.apiProdutos.ApiProdutos.service.product.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,58 +24,58 @@ public class ProductController {
 
     @PostMapping("/create")
     @Transactional
-    public ResponseEntity<Object> createProduct(@RequestBody ProductModel bodyProductModel) {
-        return service.createProduct(bodyProductModel);
+    public ResponseEntity<Object> createProduct(@RequestBody ProductDto bodyProduct) {
+        return new ResponseEntity<>(service.createProduct(bodyProduct), HttpStatus.CREATED);
     }
 
     @GetMapping("/get/{id}")
     public ResponseEntity<Object> getProductById(@PathVariable Integer id) {
-        return service.getProductById(id);
+        return new ResponseEntity<>(service.getProductById(id), HttpStatus.OK);
     }
 
     @GetMapping("/get-all")
     public ResponseEntity<Object> getAllProducts() {
-        return service.getAllProducts();
+        return new ResponseEntity<>(service.getAllProducts(), HttpStatus.OK);
     }
 
     @GetMapping("/get-all/page={pageNumber}")
     public ResponseEntity<Object> getAllProductsPageable(@PathVariable Integer pageNumber) {
-        return service.getAllProductsPageable(pageNumber);
+        return new ResponseEntity<>(service.getAllProductsPageable(pageNumber), HttpStatus.OK);
     }
 
     @PatchMapping("/partial-update/id={id}")
     @Transactional
-    public ResponseEntity<Object> partialProductUpdateById(@PathVariable Integer id, @RequestBody ProductUpdateRecordData data) {
-        return service.partialProductUpdateById(id, data);
+    public ResponseEntity<Object> partialProductUpdateById(@PathVariable Integer id, @RequestBody ProductDto data) {
+        return new ResponseEntity<>(service.partialProductUpdateById(id, data), HttpStatus.OK);
     }
 
     @PutMapping("/update/id={id}")
     @Transactional
-    public ResponseEntity<Object> fullProductUpdateById(@PathVariable Integer id, @RequestBody ProductUpdateRecordData data) {
-        return service.fullProductUpdateById(id, data);
+    public ResponseEntity<Object> fullProductUpdateById(@PathVariable Integer id, @RequestBody ProductDto data) {
+        return new ResponseEntity<>(service.fullProductUpdateById(id, data), HttpStatus.OK);
     }
 
     @PatchMapping("/partial-update/barCode={barCode}")
     @Transactional
-    public ResponseEntity<Object> partialProductUpdateByBarCode(@PathVariable Long barCode, @RequestBody ProductUpdateRecordData data) {
-        return service.partialProductUpdateByBarCode(barCode, data);
+    public ResponseEntity<Object> partialProductUpdateByBarCode(@PathVariable Long barCode, @RequestBody ProductDto data) {
+        return new ResponseEntity<>(service.partialProductUpdateByBarCode(barCode, data), HttpStatus.OK);
     }
 
     @PutMapping("/update/barCode={barCode}")
     @Transactional
-    public ResponseEntity<Object> fullProductUpdateByBarCode(@PathVariable Long barCode, @RequestBody ProductUpdateRecordData data) {
-        return service.fullProductUpdateByBarCode(barCode, data);
+    public ResponseEntity<Object> fullProductUpdateByBarCode(@PathVariable Long barCode, @RequestBody ProductDto data) {
+        return new ResponseEntity<>(service.fullProductUpdateByBarCode(barCode, data), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/id={id}")
     @Transactional
     public ResponseEntity<Object> deleteProductById(@PathVariable Integer id) {
-        return service.deleteProductById(id);
+        return new ResponseEntity<>(service.deleteProductById(id), HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/barCode={barCode}")
     @Transactional
     public ResponseEntity<Object> deleteProductByBarCode(@PathVariable Long barCode) {
-        return service.deleteProductByBarCode(barCode);
+        return new ResponseEntity<>(service.deleteProductByBarCode(barCode), HttpStatus.OK);
     }
 }

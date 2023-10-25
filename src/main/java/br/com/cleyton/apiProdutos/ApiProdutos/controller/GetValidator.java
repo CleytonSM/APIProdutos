@@ -3,14 +3,13 @@ package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EmptyPageException;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityNotFoundException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 public class GetValidator {

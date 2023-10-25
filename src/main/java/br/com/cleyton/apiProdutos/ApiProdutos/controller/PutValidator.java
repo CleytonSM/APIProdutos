@@ -1,26 +1,26 @@
 package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
+import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityNotFoundException;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.TermsMissingException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductRepository;
-import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductUpdateRecordData;
+import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
 import java.util.Optional;
 
 public class PutValidator {
 
-    private ProductRepository repository;
+    private final ProductRepository repository;
     private Integer id;
-    private ProductUpdateRecordData data;
+    private final ProductDto data;
     private Long barCode;
-    public PutValidator(ProductRepository repository, Integer id, ProductUpdateRecordData data) {
+    public PutValidator(ProductRepository repository, Integer id, ProductDto data) {
         this.repository = repository;
         this.id = id;
         this.data = data;
     }
 
-    public PutValidator(ProductRepository repository, ProductUpdateRecordData data, Long barCode) {
+    public PutValidator(ProductRepository repository, ProductDto data, Long barCode) {
         this.repository = repository;
         this.data = data;
         this.barCode = barCode;
@@ -40,41 +40,41 @@ public class PutValidator {
         if(optionalProductModel.isEmpty()) {
             throw new EntityNotFoundException("Esse produto não existe");
         }
-        if (data.name() == null) {
+        if (data.getName() == null) {
             throw new TermsMissingException("'name' is missing");
         }
 
-        if(data.description() == null) {
+        if(data.getDescription() == null) {
             throw new TermsMissingException("'description' is missing");
         }
 
-        if(data.price() == null) {
+        if(data.getPrice() == null) {
             throw new TermsMissingException("'price' is missing");
         }
 
-        if(data.quantity() == null) {
+        if(data.getQuantity() == null) {
             throw new TermsMissingException("'quantity' is missing");
         }
 
-        if(data.barCode() == null) {
+        if(data.getBarCode() == null) {
             throw new TermsMissingException("'barCode' is missing");
         }
 
-        if(data.manufacturingDate() == null) {
+        if(data.getManufacturingDate() == null) {
             throw new TermsMissingException("'manufacturingDate' is missing");
         }
-        if(data.expirationDate() == null) {
+        if(data.getExpirationDate() == null) {
             throw new TermsMissingException("'expirationDate' is missing");
         }
 
         ProductModel product = optionalProductModel.get();
-        product.setName(data.name());
-        product.setDescription(data.description());
-        product.setPrice(data.price());
-        product.setQuantity(data.quantity());
-        product.setBarCode(data.barCode());
-        product.setManufacturingDate(data.manufacturingDate());
-        product.setExpirationDate(data.expirationDate());
+        product.setName(data.getName());
+        product.setDescription(data.getDescription());
+        product.setPrice(data.getPrice());
+        product.setQuantity(data.getQuantity());
+        product.setBarCode(data.getBarCode());
+        product.setManufacturingDate(data.getManufacturingDate());
+        product.setExpirationDate(data.getExpirationDate());
 
         return repository.save(product);
     }
