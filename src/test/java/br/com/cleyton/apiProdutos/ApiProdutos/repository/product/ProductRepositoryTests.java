@@ -1,4 +1,4 @@
-package br.com.cleyton.apiProdutos.ApiProdutos.repository;
+package br.com.cleyton.apiProdutos.ApiProdutos.repository.product;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
 import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;

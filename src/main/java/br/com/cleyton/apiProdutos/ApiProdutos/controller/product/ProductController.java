@@ -16,12 +16,6 @@ public class ProductController {
     @Autowired
     private ProductService service;
 
-    @GetMapping("/")
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<String>("test", HttpStatus.OK);
-    }
-
-
     @PostMapping("/create")
     @Transactional
     public ResponseEntity<Object> createProduct(@RequestBody ProductDto bodyProduct) {

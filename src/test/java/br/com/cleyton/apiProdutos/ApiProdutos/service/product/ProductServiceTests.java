@@ -1,4 +1,4 @@
-package br.com.cleyton.apiProdutos.ApiProdutos.service;
+package br.com.cleyton.apiProdutos.ApiProdutos.service.product;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
@@ -15,6 +15,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -36,12 +37,24 @@ public class ProductServiceTests {
 
     @BeforeEach
     public void init() {
-        product = ProductModel.builder().name("computador").description("computador bacana")
-                .price(2599.99).quantity(20).barCode(123456634123424L).manufacturingDate(LocalDateTime.now())
-                .expirationDate(LocalDateTime.now()).build();
-        productDto = ProductDto.builder().name("computador").description("computador bacana")
-                .price(2599.99).quantity(20).barCode(123456634123424L).manufacturingDate(LocalDateTime.now())
-                .expirationDate(LocalDateTime.now()).build();
+        product = new ProductModel();
+        product.setBarCode(112312534L);
+        product.setCreatedAt(LocalDate.of(2023, 1, 1).atStartOfDay());
+        product.setDescription("computador bacana");
+        product.setExpirationDate(LocalDate.of(2023, 1, 1).atStartOfDay());
+        product.setId(1);
+        product.setManufacturingDate(LocalDate.of(2023, 1, 1).atStartOfDay());
+        product.setName("computador");
+        product.setPrice(10.0);
+        product.setQuantity(10);
+        productDto = new ProductDto();
+        productDto.setBarCode(112312534L);
+        productDto.setDescription("computador bacana");
+        productDto.setExpirationDate(LocalDate.of(2023, 1, 1).atStartOfDay());
+        productDto.setManufacturingDate(LocalDate.of(2023, 1, 1).atStartOfDay());
+        productDto.setName("computador");
+        productDto.setPrice(10.0);
+        productDto.setQuantity(10);
     }
     @Test
     public void ProductService_CreateProduct_ReturnsProduct() {
