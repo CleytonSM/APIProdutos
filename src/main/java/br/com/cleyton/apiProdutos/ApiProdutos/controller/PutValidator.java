@@ -2,7 +2,7 @@ package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityNotFoundException;
-import br.com.cleyton.apiProdutos.ApiProdutos.exception.TermsMissingException;
+import br.com.cleyton.apiProdutos.ApiProdutos.exception.MissingTermsException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
 import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
@@ -41,30 +41,30 @@ public class PutValidator {
             throw new EntityNotFoundException("Esse produto não existe");
         }
         if (data.getName() == null) {
-            throw new TermsMissingException("'name' is missing");
+            throw new MissingTermsException("'name' is missing");
         }
 
         if(data.getDescription() == null) {
-            throw new TermsMissingException("'description' is missing");
+            throw new MissingTermsException("'description' is missing");
         }
 
         if(data.getPrice() == null) {
-            throw new TermsMissingException("'price' is missing");
+            throw new MissingTermsException("'price' is missing");
         }
 
         if(data.getQuantity() == null) {
-            throw new TermsMissingException("'quantity' is missing");
+            throw new MissingTermsException("'quantity' is missing");
         }
 
         if(data.getBarCode() == null) {
-            throw new TermsMissingException("'barCode' is missing");
+            throw new MissingTermsException("'barCode' is missing");
         }
 
         if(data.getManufacturingDate() == null) {
-            throw new TermsMissingException("'manufacturingDate' is missing");
+            throw new MissingTermsException("'manufacturingDate' is missing");
         }
         if(data.getExpirationDate() == null) {
-            throw new TermsMissingException("'expirationDate' is missing");
+            throw new MissingTermsException("'expirationDate' is missing");
         }
 
         ProductModel product = optionalProductModel.get();

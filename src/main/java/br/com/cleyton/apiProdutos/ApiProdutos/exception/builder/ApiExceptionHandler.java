@@ -24,8 +24,8 @@ public class ApiExceptionHandler {
         return new ResponseEntity<>(apiException, conflict);
     }
 
-    @ExceptionHandler(value = {TermsMissingException.class})
-    public ResponseEntity<Object> termsMissingException(TermsMissingException e) {
+    @ExceptionHandler(value = {MissingTermsException.class})
+    public ResponseEntity<Object> termsMissingException(MissingTermsException e) {
         HttpStatus badRequest = HttpStatus.BAD_REQUEST;
         ApiException apiException = new ApiException(
                 badRequest,

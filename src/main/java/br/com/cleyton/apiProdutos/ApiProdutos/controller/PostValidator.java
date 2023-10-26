@@ -2,7 +2,7 @@ package br.com.cleyton.apiProdutos.ApiProdutos.controller;
 
 import br.com.cleyton.apiProdutos.ApiProdutos.dto.product.ProductDto;
 import br.com.cleyton.apiProdutos.ApiProdutos.exception.EntityAlreadyExistsException;
-import br.com.cleyton.apiProdutos.ApiProdutos.exception.TermsMissingException;
+import br.com.cleyton.apiProdutos.ApiProdutos.exception.MissingTermsException;
 import br.com.cleyton.apiProdutos.ApiProdutos.model.product.ProductModel;
 import br.com.cleyton.apiProdutos.ApiProdutos.repository.product.ProductRepository;
 
@@ -19,31 +19,31 @@ public class PostValidator {
 
     public ProductModel postProductValidator() {
         if(bodyProduct.getName() == null) {
-            throw new TermsMissingException("'name' is missing");
+            throw new MissingTermsException("'name' is missing");
         }
 
         if(bodyProduct.getDescription() == null) {
-            throw new TermsMissingException("'description' is missing");
+            throw new MissingTermsException("'description' is missing");
         }
 
         if(bodyProduct.getPrice() == null) {
-            throw new TermsMissingException("'price' is null");
+            throw new MissingTermsException("'price' is null");
         }
 
         if(bodyProduct.getQuantity() == null) {
-            throw new TermsMissingException("'quantity' is missing");
+            throw new MissingTermsException("'quantity' is missing");
         }
 
         if(bodyProduct.getBarCode() == null) {
-            throw new TermsMissingException("'barCode' is missing");
+            throw new MissingTermsException("'barCode' is missing");
         }
 
         if(bodyProduct.getManufacturingDate() == null) {
-            throw new TermsMissingException("'manufacturingDate' is missing");
+            throw new MissingTermsException("'manufacturingDate' is missing");
         }
 
         if (bodyProduct.getExpirationDate() == null) {
-            throw new TermsMissingException("'expirationDate' is missing");
+            throw new MissingTermsException("'expirationDate' is missing");
         }
 
         Optional<ProductModel> isProductModel = repository.findByBarCode(bodyProduct.getBarCode());
